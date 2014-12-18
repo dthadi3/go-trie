@@ -1,3 +1,5 @@
+//go:generate msgp
+//msgp:shim rune as:int32 using:int32/rune
 // Copyright (c) 2013 Mathieu Turcotte
 // Licensed under the MIT license.
 
@@ -12,13 +14,13 @@ import (
 	"fmt"
 )
 
-type nodeId int
+type NodeId int
 
 type nodeIdGen struct {
-	id nodeId
+	id NodeId
 }
 
-func (g *nodeIdGen) next() (next nodeId) {
+func (g *nodeIdGen) next() (next NodeId) {
 	next = g.id
 	g.id++
 	return
@@ -33,7 +35,7 @@ type Transition struct {
 
 // Represents a node in the acyclic finite-state automaton.
 type Node struct {
-	Id          nodeId
+	Id          NodeId
 	Terminal    bool
 	Transitions []Transition
 }
@@ -110,7 +112,7 @@ func (n *Node) HasPrefix(prefix string) (*Node, error) {
 
 // Gets the number of nodes in the given automaton.
 func Size(node *Node) int {
-	ids := make(map[nodeId]bool)
+	ids := make(map[NodeId]bool)
 	queue := []*Node{node}
 	for len(queue) > 0 {
 		node = queue[0]
