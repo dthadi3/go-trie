@@ -1,18 +1,18 @@
 package gtrie
 
 // NOTE: THIS FILE WAS PRODUCED BY THE
-// MSGP CODE GENERATION TOOL (github.com/philhofer/msgp)
+// MSGP CODE GENERATION TOOL (github.com/tinylib/msgp)
 // DO NOT EDIT
 
 import (
-	"testing"
 	"bytes"
-	"github.com/philhofer/msgp/msgp"
+	"testing"
+
+	"github.com/tinylib/msgp/msgp"
 )
 
-
-func TestTransitionMarshalUnmarshal(t *testing.T) {
-	v := new(Transition)
+func TestMarshalUnmarshalNode(t *testing.T) {
+	v := Node{}
 	bts, err := v.MarshalMsg(nil)
 	if err != nil {
 		t.Fatal(err)
@@ -34,8 +34,8 @@ func TestTransitionMarshalUnmarshal(t *testing.T) {
 	}
 }
 
-func BenchmarkTransitionMarshalMsg(b *testing.B) {
-	v := new(Transition)
+func BenchmarkMarshalMsgNode(b *testing.B) {
+	v := Node{}
 	b.ReportAllocs()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -43,8 +43,8 @@ func BenchmarkTransitionMarshalMsg(b *testing.B) {
 	}
 }
 
-func BenchmarkTransitionAppendMsg(b *testing.B) {
-	v := new(Transition)
+func BenchmarkAppendMsgNode(b *testing.B) {
+	v := Node{}
 	bts := make([]byte, 0, v.Msgsize())
 	bts, _ = v.MarshalMsg(bts[0:0])
 	b.SetBytes(int64(len(bts)))
@@ -55,8 +55,8 @@ func BenchmarkTransitionAppendMsg(b *testing.B) {
 	}
 }
 
-func BenchmarkTransitionUnmarshal(b *testing.B) {
-	v := new(Transition)
+func BenchmarkUnmarshalNode(b *testing.B) {
+	v := Node{}
 	bts, _ := v.MarshalMsg(nil)
 	b.ReportAllocs()
 	b.SetBytes(int64(len(bts)))
@@ -69,34 +69,34 @@ func BenchmarkTransitionUnmarshal(b *testing.B) {
 	}
 }
 
-func TestTransitionEncodeDecode(t *testing.T) {
-	v := new(Transition)
+func TestEncodeDecodeNode(t *testing.T) {
+	v := Node{}
 	var buf bytes.Buffer
-	msgp.Encode(&buf, v)
+	msgp.Encode(&buf, &v)
 
 	m := v.Msgsize()
 	if buf.Len() > m {
-		t.Logf("WARNING: Maxsize() for %v is inaccurate", v)
+		t.Logf("WARNING: Msgsize() for %v is inaccurate", v)
 	}
 
-	vn := new(Transition)
-	err := msgp.Decode(&buf, vn)
+	vn := Node{}
+	err := msgp.Decode(&buf, &vn)
 	if err != nil {
 		t.Error(err)
 	}
 
 	buf.Reset()
-	msgp.Encode(&buf, v)
+	msgp.Encode(&buf, &v)
 	err = msgp.NewReader(&buf).Skip()
 	if err != nil {
 		t.Error(err)
 	}
 }
 
-func BenchmarkTransitionEncode(b *testing.B) {
-	v := new(Transition)
+func BenchmarkEncodeNode(b *testing.B) {
+	v := Node{}
 	var buf bytes.Buffer
-	msgp.Encode(&buf, v)
+	msgp.Encode(&buf, &v)
 	b.SetBytes(int64(buf.Len()))
 	en := msgp.NewWriter(msgp.Nowhere)
 	b.ReportAllocs()
@@ -107,12 +107,12 @@ func BenchmarkTransitionEncode(b *testing.B) {
 	en.Flush()
 }
 
-func BenchmarkTransitionDecode(b *testing.B) {
-	v := new(Transition)
+func BenchmarkDecodeNode(b *testing.B) {
+	v := Node{}
 	var buf bytes.Buffer
-	msgp.Encode(&buf, v)
+	msgp.Encode(&buf, &v)
 	b.SetBytes(int64(buf.Len()))
-	rd := msgp.NewEndlessReader(buf.Bytes())
+	rd := msgp.NewEndlessReader(buf.Bytes(), b)
 	dc := msgp.NewReader(rd)
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -123,8 +123,9 @@ func BenchmarkTransitionDecode(b *testing.B) {
 		}
 	}
 }
-func TestNodeMarshalUnmarshal(t *testing.T) {
-	v := new(Node)
+
+func TestMarshalUnmarshalTransition(t *testing.T) {
+	v := Transition{}
 	bts, err := v.MarshalMsg(nil)
 	if err != nil {
 		t.Fatal(err)
@@ -146,8 +147,8 @@ func TestNodeMarshalUnmarshal(t *testing.T) {
 	}
 }
 
-func BenchmarkNodeMarshalMsg(b *testing.B) {
-	v := new(Node)
+func BenchmarkMarshalMsgTransition(b *testing.B) {
+	v := Transition{}
 	b.ReportAllocs()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -155,8 +156,8 @@ func BenchmarkNodeMarshalMsg(b *testing.B) {
 	}
 }
 
-func BenchmarkNodeAppendMsg(b *testing.B) {
-	v := new(Node)
+func BenchmarkAppendMsgTransition(b *testing.B) {
+	v := Transition{}
 	bts := make([]byte, 0, v.Msgsize())
 	bts, _ = v.MarshalMsg(bts[0:0])
 	b.SetBytes(int64(len(bts)))
@@ -167,8 +168,8 @@ func BenchmarkNodeAppendMsg(b *testing.B) {
 	}
 }
 
-func BenchmarkNodeUnmarshal(b *testing.B) {
-	v := new(Node)
+func BenchmarkUnmarshalTransition(b *testing.B) {
+	v := Transition{}
 	bts, _ := v.MarshalMsg(nil)
 	b.ReportAllocs()
 	b.SetBytes(int64(len(bts)))
@@ -181,34 +182,34 @@ func BenchmarkNodeUnmarshal(b *testing.B) {
 	}
 }
 
-func TestNodeEncodeDecode(t *testing.T) {
-	v := new(Node)
+func TestEncodeDecodeTransition(t *testing.T) {
+	v := Transition{}
 	var buf bytes.Buffer
-	msgp.Encode(&buf, v)
+	msgp.Encode(&buf, &v)
 
 	m := v.Msgsize()
 	if buf.Len() > m {
-		t.Logf("WARNING: Maxsize() for %v is inaccurate", v)
+		t.Logf("WARNING: Msgsize() for %v is inaccurate", v)
 	}
 
-	vn := new(Node)
-	err := msgp.Decode(&buf, vn)
+	vn := Transition{}
+	err := msgp.Decode(&buf, &vn)
 	if err != nil {
 		t.Error(err)
 	}
 
 	buf.Reset()
-	msgp.Encode(&buf, v)
+	msgp.Encode(&buf, &v)
 	err = msgp.NewReader(&buf).Skip()
 	if err != nil {
 		t.Error(err)
 	}
 }
 
-func BenchmarkNodeEncode(b *testing.B) {
-	v := new(Node)
+func BenchmarkEncodeTransition(b *testing.B) {
+	v := Transition{}
 	var buf bytes.Buffer
-	msgp.Encode(&buf, v)
+	msgp.Encode(&buf, &v)
 	b.SetBytes(int64(buf.Len()))
 	en := msgp.NewWriter(msgp.Nowhere)
 	b.ReportAllocs()
@@ -219,12 +220,12 @@ func BenchmarkNodeEncode(b *testing.B) {
 	en.Flush()
 }
 
-func BenchmarkNodeDecode(b *testing.B) {
-	v := new(Node)
+func BenchmarkDecodeTransition(b *testing.B) {
+	v := Transition{}
 	var buf bytes.Buffer
-	msgp.Encode(&buf, v)
+	msgp.Encode(&buf, &v)
 	b.SetBytes(int64(buf.Len()))
-	rd := msgp.NewEndlessReader(buf.Bytes())
+	rd := msgp.NewEndlessReader(buf.Bytes(), b)
 	dc := msgp.NewReader(rd)
 	b.ReportAllocs()
 	b.ResetTimer()
