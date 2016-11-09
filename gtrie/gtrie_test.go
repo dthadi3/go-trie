@@ -5,7 +5,7 @@ package gtrie_test
 
 import (
 	"bufio"
-	"github.com/MathieuTurcotte/go-trie/gtrie"
+	"github.com/ctdk/go-trie/gtrie"
 	"io"
 	"log"
 	"os"
