@@ -86,13 +86,28 @@ func TestPrefix(t *testing.T) {
 
 }
 
-func BenchmarkAccepts(b *testing.B) {
-	b.StopTimer()
-
-	words := []string{"abaissassions", "abaisserions", "abandonnassions"}
+// Test behavior with a large dictionary.
+func TestAccept(t *testing.T) {
+	words := readWords("words.txt")
 	trie, err := gtrie.Create(readWords("words.txt"))
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	for _, word := range words {
+		if !trie.Accepts(word) {
+			t.Error(word)
+		}
+	}
+}
+
+func BenchmarkAccepts(b *testing.B) {
+	b.StopTimer()
+
+	words := []string{"evropenescului", "simulantilor", "zburdalniciilor"}
+	trie, err := gtrie.Create(readWords("words.txt"))
+	if err != nil {
+		b.Fatal(err)
 	}
 
 	b.StartTimer()
@@ -100,7 +115,7 @@ func BenchmarkAccepts(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		for _, word := range words {
 			if !trie.Accepts(word) {
-				log.Fatal(word)
+				b.Fatal(word)
 			}
 		}
 	}

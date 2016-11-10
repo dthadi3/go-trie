@@ -10,6 +10,7 @@ package gtrie
 import (
 	"errors"
 	"sort"
+	"strconv"
 	"strings"
 	"fmt"
 )
@@ -166,7 +167,8 @@ type eqClass struct {
 func getEquivalenceClass(node *Node) (class eqClass) {
 	children := []string{}
 	for _, t := range node.Transitions {
-		children = append(children, string(t.Label)+":"+string(t.Child.Id))
+		child := string(t.Label) + ":" + strconv.Itoa(int(t.Child.Id))
+		children = append(children, child)
 	}
 	class.children = strings.Join(children, ";")
 	class.terminal = node.Terminal
